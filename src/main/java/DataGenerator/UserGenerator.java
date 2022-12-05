@@ -1,5 +1,6 @@
 package DataGenerator;
 
+import Models.Credentials;
 import Models.User;
 
 import java.sql.Timestamp;
@@ -29,5 +30,9 @@ public class UserGenerator {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String login = "apitest"+ Long.toString(timestamp.getTime()) + "@yandex.ru";
         return new User(login,"123456","");
+    }
+
+    public static User getDefault(){
+        return new User("loginapitest@yandex.ru","123456","chebyrashka");
     }
 }

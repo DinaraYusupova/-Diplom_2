@@ -35,6 +35,9 @@ public class CreateUserTest {
         checkAccessToken(responseCreate);
         checkRefreshToken(responseCreate);
         accessToken = responseCreate.extract().path("accessToken");
+        String email = responseCreate.extract().path("user.email");
+        checkUserEmail(responseCreate,user.getEmail());
+        checkUserName(responseCreate,user.getName());
         userClient.delete(accessToken);
     }
 
@@ -78,12 +81,22 @@ public class CreateUserTest {
         response.assertThat().body("message", equalTo(message));
     }
 
-    @Step("Compare accessToken not null")
+    @Step("Check email in response")
+    public void checkUserEmail(ValidatableResponse response, String email){
+        response.assertThat().body("user.email", equalTo(email));
+    }
+
+    @Step("Check name in response")
+    public void checkUserName(ValidatableResponse response, String name){
+        response.assertThat().body("user.name", equalTo(name));
+    }
+
+    @Step("Check accessToken not null")
     public void checkAccessToken(ValidatableResponse response){
         response.assertThat().body("accessToken", notNullValue());
     }
 
-    @Step("Compare refreshToken not null")
+    @Step("Check refreshToken not null")
     public void checkRefreshToken(ValidatableResponse response){
         response.assertThat().body("refreshToken", notNullValue());
     }
