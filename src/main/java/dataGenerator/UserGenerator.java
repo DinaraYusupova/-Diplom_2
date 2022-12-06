@@ -1,7 +1,6 @@
-package DataGenerator;
+package dataGenerator;
 
-import Models.Credentials;
-import Models.User;
+import models.User;
 
 import java.sql.Timestamp;
 
@@ -33,6 +32,7 @@ public class UserGenerator {
     }
 
     public static User getDefault(){
-        return new User("loginapitest@yandex.ru","123456","chebyrashka");
+        return new User("loginfortest@yandex.ru","123456","chebyrashka");
     }
+
 }

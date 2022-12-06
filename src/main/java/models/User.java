@@ -1,16 +1,17 @@
-package Models;
+package models;
 
-public class Credentials {
+public class User {
     private String email;
     private String password;
+    private String name;
 
-    public Credentials(String email, String password) {
+    public User(String email, String password, String name) {
         this.email = email;
         this.password = password;
+        this.name = name;
     }
 
-    public static Credentials from(User user){
-        return new Credentials(user.getEmail(),user.getPassword());
+    public User() {
     }
 
     public String getEmail() {
@@ -27,5 +28,13 @@ public class Credentials {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
