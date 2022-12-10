@@ -10,10 +10,12 @@ import java.util.Random;
 
 public class OrderDataGenerator {
     public static OrderData getRandomIngredients() {
+        //Запрашиваю список возможных ингридиентов и сохраняю в список
         OrderClient orderClient = new OrderClient();
         ValidatableResponse getResponce = orderClient.getIngredients();
         List<String> ingredientIds = getResponce.extract().jsonPath().getList("data._id");
 
+        //Создаю свой список из 4 рандомных ингридиентов
         List<String> listOfIngredients = new ArrayList<>();
         Random rand = new Random();
         for (int i = 0; i < 4; i++) {
@@ -22,9 +24,6 @@ public class OrderDataGenerator {
             listOfIngredients.add(randomElement);
         }
         return new OrderData(listOfIngredients);
-    }
-    public static OrderData getWithoutIngredients222() {
-        return new OrderData();
     }
     public static OrderData getWithoutIngredients() {
         List<String> listOfIngredients = new ArrayList<>();

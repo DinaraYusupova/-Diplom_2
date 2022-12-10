@@ -46,6 +46,4 @@ public class LoginUserErrorTest {
         checkResponse.compareResponseMessage(responseLogin, MESSAGE_FOR_BAD_REQUEST);
         Thread.sleep(3000); //в приложении уязвимость: если отправлять 2 запроса подряд, то появляется ошибка 429 Too Many Requests
     }
-
-
 }

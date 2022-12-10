@@ -23,7 +23,7 @@ public class LoginUserTest {
 
 
     @Before
-    public void setUp() throws InterruptedException {
+    public void createUser() throws InterruptedException {
         userClient = new UserClient();
         user = UserGenerator.getDefault();
         credentials = CredentialsGenerator.getDefault();
@@ -57,5 +57,4 @@ public class LoginUserTest {
         checkResponse.compareStatusCode(doubleResponseLogin, statusCode);
         checkResponse.compareStatus(doubleResponseLogin,true);
     }
-
 }

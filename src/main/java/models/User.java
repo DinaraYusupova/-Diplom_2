@@ -1,5 +1,7 @@
 package models;
 
+
+//Модель, для хранения данных пользователя, необходимых для регистрации
 public class User {
     private String email;
     private String password;
@@ -10,7 +12,6 @@ public class User {
         this.password = password;
         this.name = name;
     }
-
     public User() {
     }
 

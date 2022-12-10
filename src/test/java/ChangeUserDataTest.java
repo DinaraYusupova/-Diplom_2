@@ -18,7 +18,7 @@ import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 
 @RunWith(Parameterized.class)
 public class ChangeUserDataTest {
-    UserVerification checkResponse = new UserVerification();
+    UserVerification checkResponse;
     private final UserData userData;
     private UserClient userClient;
     private String accessToken;
@@ -29,7 +29,7 @@ public class ChangeUserDataTest {
     }
 
     @Before
-    public void setUp() throws InterruptedException {
+    public void createUser() throws InterruptedException {
         userClient = new UserClient();
         User user = UserGenerator.getDefault();
         userClient.create(user); // создаю пользователя, чтобы он точно был в базе
@@ -37,6 +37,7 @@ public class ChangeUserDataTest {
         Credentials credentials = Credentials.from(user);
         ValidatableResponse responseLogin = userClient.login(credentials);//логин, чтобы получить accessToken
         accessToken = responseLogin.extract().path("accessToken");
+        checkResponse = new UserVerification();
     }
     @After
     public void cleanUp() {
@@ -54,14 +55,12 @@ public class ChangeUserDataTest {
     @Test
     @DisplayName("change user data and check statusCode and response data")
     public void changeUserDataTest() {
-
         ValidatableResponse responseChangeData = userClient.changeUserData(accessToken,userData);
         checkResponse.compareStatusCode(responseChangeData,SC_OK);
         checkResponse.compareStatus(responseChangeData,true);
         checkResponse.compareUserEmail(responseChangeData,userData.getEmail());
         checkResponse.compareUserName(responseChangeData,userData.getName());
     }
-
 
     @Test
     @DisplayName("try to change user data without authorization and check statusCode and response data")
@@ -72,5 +71,4 @@ public class ChangeUserDataTest {
         checkResponse.compareStatus(responseChangeData,false);
         checkResponse.compareResponseMessage(responseChangeData, ERROR_MESSAGE);
     }
-
 }

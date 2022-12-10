@@ -23,7 +23,6 @@ public class CreateUserWithoutDataTest {
         userClient = new UserClient();
     }
 
-
     public CreateUserWithoutDataTest(User user) {
         this.user = user;
     }
@@ -46,5 +45,4 @@ public class CreateUserWithoutDataTest {
         checkResponse.compareResponseMessage(responseCreate, MESSAGE_FOR_BAD_REQUEST);
         Thread.sleep(3000); //в приложении уязвимость: если отправлять 2 запроса подряд, то появляется ошибка 429 Too Many Requests
     }
-
 }

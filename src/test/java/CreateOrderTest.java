@@ -8,7 +8,6 @@ import models.Credentials;
 import models.OrderData;
 import models.User;
 import io.restassured.response.ValidatableResponse;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,6 +27,7 @@ public class CreateOrderTest {
     @Test
     @DisplayName("Create order with authorization and check status code and response data")
     public void createOrderWithAuthorization() throws InterruptedException {
+        //Создаю в базе пользователя и получаю его токен
         UserClient userClient = new UserClient();
         User user = UserGenerator.getDefault();
         userClient.create(user); // создаю пользователя, чтобы он точно был в базе
@@ -35,8 +35,7 @@ public class CreateOrderTest {
         Credentials credentials = Credentials.from(user);
         ValidatableResponse responseLogin = userClient.login(credentials);//логин, чтобы получить accessToken
         String accessToken = responseLogin.extract().path("accessToken");
-
-
+        //Создаю заказ из 4 рандомных ингридиентов
         OrderData orderData = OrderDataGenerator.getRandomIngredients();
         ValidatableResponse responseCreateOrder = orderClient.createOrder(accessToken,orderData);
         //Проверяю выборочный список параметров из json response, что проверять наверное нужно согласовать с требованиями
@@ -60,7 +59,6 @@ public class CreateOrderTest {
         orderResponseVerification.compareStatus(responseCreateOrder,true);
         orderResponseVerification.checkName(responseCreateOrder);
         orderResponseVerification.checkOrderNumber(responseCreateOrder);
-
     }
 
 }

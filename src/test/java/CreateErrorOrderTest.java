@@ -33,12 +33,10 @@ public class CreateErrorOrderTest {
         };
     }
 
-
     @Before
     public void setUp(){
         orderClient = new OrderClient();
     }
-
 
     @Test
     @DisplayName("Check status code, status and message of creating order with wrong data")
