@@ -1,5 +1,7 @@
 package models;
 
+
+//Модель, для хранения данных пользователя, необходимых для авторизации (используется для сериализации данных при авторизации)
 public class Credentials {
     private String email;
     private String password;
@@ -8,11 +10,11 @@ public class Credentials {
         this.email = email;
         this.password = password;
     }
-
     public static Credentials from(User user){
         return new Credentials(user.getEmail(),user.getPassword());
     }
-
+    public Credentials() {
+    }
     public String getEmail() {
         return email;
     }

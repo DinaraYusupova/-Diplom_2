@@ -2,6 +2,7 @@ package models;
 
 import java.util.List;
 
+//Модель, для хранения данных для заказа бургера (используется для сериализации данных при заказе)
 public class OrderData {
     private List<String> ingredients;
 

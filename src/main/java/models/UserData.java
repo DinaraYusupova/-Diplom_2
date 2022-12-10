@@ -1,5 +1,7 @@
 package models;
 
+
+//Модель, для хранения данных пользователя, которые отображаютя в личном кабинете
 public class UserData {
     private String email;
     private String name;
@@ -8,7 +10,6 @@ public class UserData {
         this.email = email;
         this.name = name;
     }
-
     public static UserData from(User user){
         return new UserData(user.getEmail(),user.getName());
     }

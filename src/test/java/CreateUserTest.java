@@ -4,10 +4,8 @@ import dataGenerator.UserGenerator;
 import models.User;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.apache.http.HttpStatus.*;
 
 
@@ -23,12 +21,6 @@ public class CreateUserTest {
         userClient = new UserClient();
     }
 
-    @After
-    public void cleanUp() {
-        userClient.delete(accessToken);
-    }
-
-
     @Test
     @DisplayName("Check status code and response data of creating user")
     public void createNewUser() {
@@ -41,6 +33,7 @@ public class CreateUserTest {
         accessToken = responseCreate.extract().path("accessToken");
         checkResponse.compareUserEmail(responseCreate,user.getEmail());
         checkResponse.compareUserName(responseCreate,user.getName());
+        userClient.delete(accessToken);
     }
 
     @Test
@@ -54,6 +47,7 @@ public class CreateUserTest {
         checkResponse.compareStatus(doubleResponseCreate,false);
         checkResponse.compareResponseMessage(doubleResponseCreate, MESSAGE_FOR_CONFLICT);
         accessToken = responseCreate.extract().path("accessToken");
+        userClient.delete(accessToken);
     }
 
     @Test
