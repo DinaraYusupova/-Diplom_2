@@ -39,11 +39,10 @@ public class LoginUserErrorTest {
     }
     @Test
     @DisplayName("Login user with non-existent data and check status code and response data")
-    public void loginUserWithErrorData() throws InterruptedException {
+    public void loginUserWithErrorData() {
         ValidatableResponse responseLogin = userClient.login(credentials);
         checkResponse.compareStatusCode(responseLogin, statusCode);
         checkResponse.compareStatus(responseLogin,false);
         checkResponse.compareResponseMessage(responseLogin, MESSAGE_FOR_BAD_REQUEST);
-        Thread.sleep(3000); //в приложении уязвимость: если отправлять 2 запроса подряд, то появляется ошибка 429 Too Many Requests
     }
 }

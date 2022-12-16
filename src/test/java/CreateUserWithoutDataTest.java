@@ -38,11 +38,10 @@ public class CreateUserWithoutDataTest {
 
     @Test
     @DisplayName("Check status code and response data of creating user with insufficient data")
-    public void createUserWithInsufficientData() throws InterruptedException {
+    public void createUserWithInsufficientData() {
         ValidatableResponse responseCreate = userClient.create(user);
         checkResponse.compareStatusCode(responseCreate, SC_FORBIDDEN);
         checkResponse.compareStatus(responseCreate,false);
         checkResponse.compareResponseMessage(responseCreate, MESSAGE_FOR_BAD_REQUEST);
-        Thread.sleep(3000); //в приложении уязвимость: если отправлять 2 запроса подряд, то появляется ошибка 429 Too Many Requests
     }
 }

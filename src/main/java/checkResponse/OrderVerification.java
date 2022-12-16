@@ -57,4 +57,89 @@ public class OrderVerification {
     public void checkOrderTotalToday(ValidatableResponse response){
         response.assertThat().body("totalToday", notNullValue());
     }
+
+
+
+
+    public void checkOrderCreatedData(ValidatableResponse response){
+        response.assertThat().body("order.createdAt", notNullValue());
+    }
+    public void checkOrderUpdatedData(ValidatableResponse response){
+        response.assertThat().body("order.updatedAt", notNullValue());
+    }
+    public void checkOrderPrice(ValidatableResponse response){
+        response.assertThat().body("order.price", notNullValue());
+    }
+
+    public void compareResponseOrderStatus(ValidatableResponse response){
+        response.assertThat().body("order.status", equalTo("done"));
+    }
+
+    public void checkOrderIngredientsId(ValidatableResponse response){
+        response.assertThat().body("order.ingredients._id", notNullValue());
+    }
+
+
+    public void checkOrderIngredientsName(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.name", notNullValue());
+    }
+    public void checkOrderIngredientsType(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.type", notNullValue());
+    }
+    public void checkOrderIngredientsProteins(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.proteins", notNullValue());
+    }
+    public void checkOrderIngredientsFat(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.fat", notNullValue());
+    }
+    public void checkOrderIngredientsCarbohydrates(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.carbohydrates", notNullValue());
+    }
+    public void checkOrderIngredientsCalories(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.calories", notNullValue());
+    }
+    public void checkOrderIngredientsPrice(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.price", notNullValue());
+    }
+    public void checkOrderIngredientsImage(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.image", notNullValue());
+    }
+    public void checkOrderIngredientsImage_mobile(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.image_mobile", notNullValue());
+    }
+    public void checkOrderIngredientsImage_large(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.image_large", notNullValue());
+    }
+    public void checkOrderIngredientsV(ValidatableResponse response){
+        response.assertThat().body("order.ingredients.__v", notNullValue());
+    }
+
+
+
+
+
+    public void checkGetOrderId(ValidatableResponse response){
+        response.assertThat().body("orders._id", notNullValue());
+    }
+
+
+    public void checkGetOrderIngredients(ValidatableResponse response){
+        response.assertThat().body("orders.ingredients", notNullValue());
+    }
+
+    public void compareGetOrderStatus(ValidatableResponse response){
+        response.assertThat().body("orders.status", notNullValue());
+    }
+    public void checkOrderName(ValidatableResponse response){
+        response.assertThat().body("orders.name", notNullValue());
+    }
+    public void checkCreatedAt(ValidatableResponse response){
+        response.assertThat().body("orders.createdAt", notNullValue());
+    }
+    public void checkUpdatedAt(ValidatableResponse response){
+        response.assertThat().body("orders.updatedAt", notNullValue());
+    }
+    public void checkGetOrderNumber(ValidatableResponse response){
+        response.assertThat().body("orders.number", notNullValue());
+    }
 }

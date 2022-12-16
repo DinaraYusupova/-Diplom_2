@@ -8,33 +8,39 @@ import models.Credentials;
 import models.OrderData;
 import models.User;
 import io.restassured.response.ValidatableResponse;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.apache.http.HttpStatus.SC_OK;
-import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
+
 
 public class GetOrderTest {
     private final OrderVerification orderResponseVerification = new OrderVerification();
     private UserClient userClient;
-    private final String MESSAGE = "You should be authorised";
+    String accessToken;
 
     @Before
     public void setUp(){
         userClient = new UserClient();
     }
 
+    @After
+    public void cleanUp() {
+        userClient.delete(accessToken);
+    }
+
+
     @Test
     @DisplayName("Get order with authorization and check status code and response data")
-    public void getListOfOrdersWithAuthorization() throws InterruptedException {
+    public void getListOfOrdersWithAuthorization() {
         //Создаю в базе пользователя, получаю его токен и создаю заказ для него
         OrderClient orderClient = new OrderClient();
         User user = UserGenerator.getDefault();
         userClient.create(user); // создаю пользователя
-        Thread.sleep(3000); //в приложении уязвимость: если отправлять 2 запроса подряд, то появляется ошибка 429 Too Many Requests
         Credentials credentials = Credentials.from(user);
         ValidatableResponse responseLogin = userClient.login(credentials);//логин, чтобы получить accessToken
-        String accessToken = responseLogin.extract().path("accessToken");
+        accessToken = responseLogin.extract().path("accessToken");
         OrderData orderData = OrderDataGenerator.getRandomIngredients();//создаю заказ для пользователя
         orderClient.createOrder(accessToken,orderData);
         //Запрашиваю список заказов для пользователя и проверяю данные ответа
@@ -42,19 +48,16 @@ public class GetOrderTest {
         orderResponseVerification.compareStatusCode(responseGetOrders,SC_OK);
         orderResponseVerification.compareStatus(responseGetOrders,true);
         orderResponseVerification.checkOrders(responseGetOrders);
+        orderResponseVerification.checkGetOrderId(responseGetOrders);
+        orderResponseVerification.checkGetOrderIngredients(responseGetOrders);
+        orderResponseVerification.compareGetOrderStatus(responseGetOrders);
+        orderResponseVerification.checkOrderName(responseGetOrders);
+        orderResponseVerification.checkCreatedAt(responseGetOrders);
+        orderResponseVerification.checkUpdatedAt(responseGetOrders);
+        orderResponseVerification.checkGetOrderNumber(responseGetOrders);
         orderResponseVerification.checkOrderTotal(responseGetOrders);
         orderResponseVerification.checkOrderTotalToday(responseGetOrders);
-        //удаляю пользователя
-        userClient.delete(accessToken);
     }
 
-    @Test
-    @DisplayName("Get order without authorization and check status code and response data")
-    public void getListOfOrdersWithoutAuthorization() {
-        ValidatableResponse responseGetOrders = userClient.getListOfOrders("");
-        orderResponseVerification.compareStatusCode(responseGetOrders,SC_UNAUTHORIZED);
-        orderResponseVerification.compareStatus(responseGetOrders,false);
-        orderResponseVerification.compareResponseMessage(responseGetOrders, MESSAGE);
-    }
 
 }

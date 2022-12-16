@@ -29,11 +29,10 @@ public class ChangeUserDataTest {
     }
 
     @Before
-    public void createUser() throws InterruptedException {
+    public void createUser() {
         userClient = new UserClient();
         User user = UserGenerator.getDefault();
         userClient.create(user); // создаю пользователя, чтобы он точно был в базе
-        Thread.sleep(3000); //в приложении уязвимость: если отправлять 2 запроса подряд, то появляется ошибка 429 Too Many Requests
         Credentials credentials = Credentials.from(user);
         ValidatableResponse responseLogin = userClient.login(credentials);//логин, чтобы получить accessToken
         accessToken = responseLogin.extract().path("accessToken");

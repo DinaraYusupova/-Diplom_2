@@ -23,12 +23,11 @@ public class LoginUserTest {
 
 
     @Before
-    public void createUser() throws InterruptedException {
+    public void createUser() {
         userClient = new UserClient();
         user = UserGenerator.getDefault();
         credentials = CredentialsGenerator.getDefault();
         userClient.create(user); // создаю пользователя
-        Thread.sleep(3000); //в приложении уязвимость: если отправлять 2 запроса подряд, то появляется ошибка 429 Too Many Requests
         responseLogin = userClient.login(credentials);
         accessToken = responseLogin.extract().path("accessToken");
     }
@@ -51,8 +50,7 @@ public class LoginUserTest {
 
     @Test
     @DisplayName("Double login user and check statusCode and status") //Тест с попыткой повторного логина, с уже залогининным пользователем
-    public void doubleLoginUser() throws InterruptedException {
-        Thread.sleep(3000); //в приложении уязвимость: если отправлять 2 запроса подряд, то появляется ошибка 429 Too Many Requests
+    public void doubleLoginUser(){
         ValidatableResponse doubleResponseLogin = userClient.login(credentials);
         checkResponse.compareStatusCode(doubleResponseLogin, statusCode);
         checkResponse.compareStatus(doubleResponseLogin,true);
